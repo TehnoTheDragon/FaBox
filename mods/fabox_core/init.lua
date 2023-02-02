@@ -1,4 +1,7 @@
-fabox = {}
+fabox = {
+    recipes = {};
+    recipe_types = {};
+}
 
 fabox.modname = minetest.get_current_modname
 fabox.worldpath = minetest.get_worldpath
@@ -20,14 +23,39 @@ fabox.dofile = function(path)
     return dofile(("%s/%s"):format(fabox.modpath(), path))
 end
 
+fabox.name = function(name, namespace)
+    return namespace == nil and ("%s:%s"):format(fabox.modname(), name) or ("%s:%s/%s"):format(fabox.modname(), namespace, name)
+end
+
 fabox.dofile("vendors/class.lua")
 
 fabox.loader = fabox.dofile("loader.lua")
 
 local loader = fabox.loader()
-loader:add(
-    loader.print("YEEEESH", "x2023"),
+loader:add {
     loader.save(_G),
-    loader.path("src/test.lua")
-)
+    loader.relative("src"),
+
+    -- Math
+    loader.path("vector2.lua"),
+    loader.path("vector3.lua"),
+
+    -- Minetest Wrapper
+    loader.path("CraftItem.lua"),
+    loader.path("RecipeType.lua"),
+}
 loader:load()
+
+CraftItem("test_item"):register()
+local custom_type_recipe = RecipeType("custom_type", {
+    input = "table",
+    optional = "optional",
+    output = function(value)
+        minetest.log("YEEE, CHECK VALUE!!!! IN RECIPE")
+        return true
+    end
+})
+custom_type_recipe:register({
+    input = "jhey",
+    output = 10
+})
