@@ -43,19 +43,8 @@ loader:add {
     -- Minetest Wrapper
     loader.path("CraftItem.lua"),
     loader.path("RecipeType.lua"),
-}
-loader:load()
 
-CraftItem("test_item"):register()
-local custom_type_recipe = RecipeType("custom_type", {
-    input = "table",
-    optional = "optional",
-    output = function(value)
-        minetest.log("YEEE, CHECK VALUE!!!! IN RECIPE")
-        return true
-    end
-})
-custom_type_recipe:register({
-    input = "jhey",
-    output = 10
-})
+    -- Overrides
+    loader.relative("src/overrides"),
+    loader.path("builtin_item_entity.lua"),
+}:load()
