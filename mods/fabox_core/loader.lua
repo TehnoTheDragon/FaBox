@@ -70,6 +70,7 @@ function loader:add(object, ...)
             end
         end
     end
+    return self
 end
 
 function loader:load()
