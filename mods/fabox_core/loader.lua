@@ -58,12 +58,16 @@ function loader:_init()
 end
 
 function loader:add(object, ...)
-    table.insert(self._list, object)
-
-    local _next = {...}
-    if #_next > 0 then
-        for _, object in pairs(_next) do
-            table.insert(self._list, object)
+    if type(object) == "table" and #{...} == 0 then
+        self:add(unpack(object))
+    else
+        table.insert(self._list, object)
+    
+        local _next = {...}
+        if #_next > 0 then
+            for _, object in pairs(_next) do
+                table.insert(self._list, object)
+            end
         end
     end
 end
