@@ -43,8 +43,11 @@ loader:add {
     -- Minetest Wrapper
     loader.path("CraftItem.lua"),
     loader.path("RecipeType.lua"),
+    loader.path("Node.lua"),
+    loader.path("MapGen.lua"),
 
     -- Overrides
     loader.relative("src/overrides"),
     loader.path("builtin_item_entity.lua"),
+    loader.path("hand.lua"),
 }:load()
