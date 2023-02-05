@@ -24,8 +24,8 @@ function CraftItem:description(text)
     return self
 end
 
-function CraftItem:group(name)
-    self.definition.groups[name] = 1
+function CraftItem:group(name, value)
+    self.definition.groups[name] = value or 1
     return self
 end
 
